@@ -179,13 +179,19 @@ def update_graph_based_on_images(
 
     # Checks if it has not been triggered
     if not ctx.triggered:
-        return no_update, no_update
+        return no_update, no_update, no_update
 
     if ctx.triggered_id == "graph-2-dcc" or ctx.triggered_id == "load-images-switch":
         # print(relayoutData)
         # If previous state was not changed, then do nothing
         # Avoids unnecessary checks
-        if load_images_switch_value != prev_load_images_switch_value:
+        # print("Truth test:", load_images_switch_value != prev_load_images_switch_value)
+        # print("Previous state:", prev_load_images_switch_value)
+        # print("Current state:", load_images_switch_value)
+        if (
+            load_images_switch_value != prev_load_images_switch_value
+            or load_images_switch_value == prev_load_images_switch_value == False
+        ):
             # Check if load_images_switch_value is True
             if load_images_switch_value:
                 # Checks if the relayoutData is not None
@@ -224,7 +230,7 @@ def update_graph_based_on_images(
                         x_range = fig.full_figure_for_development().layout.xaxis.range
                         y_range = fig.full_figure_for_development().layout.yaxis.range
                     else:
-                        return no_update, no_update
+                        return no_update, no_update, no_update
 
                     # print(x_range, y_range)
 
@@ -374,22 +380,25 @@ def update_graph_based_on_images(
                     return (
                         fig,
                         Serverside(points_that_were_added),
-                        load_images_switch_value,
+                        no_update,
                     )
             # If load_images_switch_value is False, then delete all images
             else:
-                fig = go.Figure(figure)
-                fig.update_layout_images(visible=False)
+                if ctx.triggered_id == "load-images-switch":
+                    fig = go.Figure(figure)
+                    fig.update_layout_images(visible=False)
 
-                toc_no_pictures = datetime.datetime.now()
-                print("Time to not add pictures:", toc_no_pictures - tic_total)
+                    toc_no_pictures = datetime.datetime.now()
+                    print("Time to not add pictures:", toc_no_pictures - tic_total)
 
-                return [fig, None, load_images_switch_value]
+                    return [fig, None, load_images_switch_value]
+                else:
+                    return [no_update, None, load_images_switch_value]
         # If the switch was not changed, then return the previous state
         else:
-            return [no_update, no_update, load_images_switch_value]
+            return [no_update, no_update, no_update]
     else:
-        return [no_update, no_update, prev_load_images_switch_value]
+        return [no_update, no_update, no_update]
 
 
 @app.callback(
