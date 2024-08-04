@@ -77,7 +77,7 @@ pca_loadings_row = [
     dbc.Row(
         dbc.Col(
             html.H5(
-                "SPLOM of Original Measures",
+                "SPLOM Plot",
                 className="text-center mt-2",
             ),
             width={
