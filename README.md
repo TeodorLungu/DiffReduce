@@ -51,7 +51,7 @@ Before you begin, make sure you have the following installed on your system:
 
 - Run the setup script by typing and running the following command in the terminal:
 
-`/setup.sh`
+`./setup.sh`
 
 - Follow the on-screen provided instructions by the script (they should appear on the terminal). The name of the environment can be chosen arbitrarily. The script will create the required Conda environment, with a name chosen by you, install the necessary packages and setup the application using `.env` varibles. The script will give an indication when it is done.
 
