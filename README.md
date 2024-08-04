@@ -308,7 +308,7 @@ Run the application using Python
 
 - You should see the Dash application interface.
 
-  
+- If you encounter a `Error loading layout`, close and restart the Python application and reload the page. You can use the same command - `python app_integrated_data.py`
 
 ## Maintenance Instructions
 
